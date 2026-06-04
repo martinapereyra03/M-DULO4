@@ -1,0 +1,273 @@
+---
+title: "Fraccionamiento, Embotellado y Etiquetado en la Industria Vitivinícola: Panorama Global y Potencial de Mendoza"
+description: |
+  Análisis comparativo de las etapas de fraccionamiento, embotellado y etiquetado del vino a nivel mundial, con foco en las oportunidades estratégicas de la región de Mendoza, Argentina.
+author:
+  - name: "André Rocío"
+    affiliation: "Universidad Nacional de Cuyo"
+  - name: "Benedetti Gino"
+    affiliation: "Universidad Nacional de Cuyo"
+  - name: "Florindo Sol"
+    affiliation: "Universidad Nacional de Cuyo"
+  - name: "Gomez Delfina"
+    affiliation: "Universidad Nacional de Cuyo"
+  - name: "Scaccia Octavio"
+    affiliation: "Universidad Nacional de Cuyo"
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 3
+    self_contained: true
+bibliography: referencias.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(scales)
+```
+
+# Introducción
+
+La cadena de valor vitivinícola no termina en la fermentación ni en la crianza: el fraccionamiento, el embotellado y el etiquetado constituyen las etapas finales que determinan en gran medida la percepción del consumidor, la inserción en mercados internacionales y la rentabilidad del productor [@canizo2019; @garcia2010]. Estas fases representan un eslabón estratégico que articula la producción primaria con la comercialización, y su eficiencia impacta directamente en la competitividad del sector.
+
+A nivel global, los principales países productores —Francia, Italia, España, Estados Unidos, Australia, Chile y Argentina— han desarrollado modelos de integración vertical que incorporan tecnologías de línea de embotellado de alta velocidad, sistemas de trazabilidad digital y normativas de etiquetado cada vez más exigentes. En este contexto, Mendoza, como región vitivinícola de clase mundial, posee atributos únicos —diversidad varietal, terroir reconocido, infraestructura instalada y capital humano especializado— que la posicionan con un potencial diferencial para capitalizar estas tendencias [@lopezguzman2013].
+
+El presente artículo analiza comparativamente el estado del arte en las etapas postfermentación a nivel mundial, identifica brechas y oportunidades, y propone un marco de referencia para potenciar el subsector de fraccionamiento y embotellado en Mendoza [@aguirre2023; @guilabert2016; @welte2009].
+
+---
+
+# Marco Conceptual
+
+## La Cadena de Valor Vitivinícola
+
+La cadena de valor del vino puede dividirse en etapas primarias (viticultura, cosecha, vinificación) y etapas de valor agregado (fraccionamiento, embotellado, etiquetado, distribución y comercialización). El fraccionamiento refiere a la división del volumen de vino en unidades de comercialización —desde bordelesas de 750 ml hasta bag-in-box y contenedores a granel— mientras que el embotellado incluye los procesos de llenado, gasificado (en espumantes), taponado (corcho, rosca, tapón sintético) y capsulado [@canizo2019].
+
+El etiquetado, por su parte, trasciende lo estético: es el principal vector de comunicación entre el productor y el consumidor, y está regulado por normativas nacionales e internacionales que contemplan denominación de origen, varietales, contenido alcohólico, alérgenos y más recientemente, información de sustentabilidad y huella de carbono [@lopezguzman2013]. La viabilidad de empresas especializadas en packaging, comercialización y distribución de vinos ha sido analizada en mercados emergentes, evidenciando que la integración de estas etapas constituye un factor crítico de éxito [@aguirre2023].
+
+## Indicadores Clave del Subsector
+
+Para la comparativa global se utilizan los siguientes indicadores:
+
+- **Capacidad de fraccionamiento** (millones de litros / año)
+- **Porcentaje de vino fraccionado en origen** (vs. exportado a granel)
+- **Adopción de tecnología** (líneas de alta velocidad, automatización)
+- **Cumplimiento normativo internacional** (OIV, FDA, UE)
+- **Valor agregado por litro fraccionado** (USD/L)
+
+---
+
+# Panorama Global del Fraccionamiento y Embotellado
+
+## Producción Mundial de Vino
+
+```{r produccion-mundial, fig.cap='Producción mundial de vino por país (en millones de hectolitros, promedio 2019-2023). Fuente: OIV 2023.', fig.height=5, fig.width=9, layout="l-body-outset"}
+
+paises <- data.frame(
+  Pais = c("Italia", "Francia", "España", "EE.UU.", "Australia", "Chile",
+           "Argentina", "Sudáfrica", "China", "Alemania"),
+  Produccion_Mhl = c(49.1, 44.6, 40.9, 23.5, 13.0, 12.9, 12.4, 10.6, 7.9, 7.5),
+  Fraccionado_Origen_Pct = c(88, 92, 78, 95, 72, 68, 61, 65, 90, 94)
+)
+
+ggplot(paises, aes(x = reorder(Pais, Produccion_Mhl), y = Produccion_Mhl,
+                   fill = Fraccionado_Origen_Pct)) +
+  geom_col(width = 0.7) +
+  geom_text(aes(label = paste0(Produccion_Mhl, " Mhl")),
+            hjust = -0.15, size = 3.2, color = "#333333") +
+  coord_flip() +
+  scale_fill_gradient(low = "#c8a97e", high = "#4a1942",
+                      name = "% Frac.\nen origen") +
+  scale_y_continuous(limits = c(0, 58)) +
+  theme_minimal(base_family = "sans") +
+  labs(
+    x = NULL,
+    y = "Producción (millones de hectolitros)",
+    title = "Producción Mundial de Vino y % Fraccionado en Origen",
+    subtitle = "Promedio 2019-2023 | Fuente: OIV"
+  ) +
+  theme(
+    plot.title = element_text(face = "bold", size = 13),
+    legend.position = "right"
+  )
+```
+
+Como se observa, países como Francia, Italia y EE.UU. fraccionan más del 88% de su vino en origen, capturando el diferencial de valor que implica comercializar producto terminado. Argentina, con un 61%, presenta una brecha importante respecto a los líderes, lo que representa simultáneamente una debilidad competitiva y una oportunidad de mejora estructural.
+
+## Comparativa de Tecnología de Líneas de Embotellado
+
+```{r tabla-tecnologia, layout="l-body-outset"}
+
+tech_data <- data.frame(
+  Region = c("Burdeos / Borgoña (FR)", "Toscana / Piamonte (IT)", "Rioja / Ribera (ES)",
+             "Napa / Sonoma (EE.UU.)", "Barossa Valley (AU)", "Valle Central (CL)",
+             "Mendoza (AR)"),
+  Velocidad_BPH = c("hasta 36.000", "hasta 32.000", "hasta 28.000", "hasta 40.000",
+                    "hasta 24.000", "hasta 20.000", "hasta 18.000"),
+  Automatizacion = c("Alta", "Alta", "Alta", "Muy Alta", "Alta", "Media-Alta", "Media"),
+  Trazabilidad = c("QR / NFC", "QR / NFC", "QR", "Blockchain / QR", "QR", "QR", "Parcial"),
+  Normas_Export = c("UE / FDA / China", "UE / FDA / China", "UE / FDA",
+                    "FDA / UE", "OIV / FDA", "OIV / FDA", "OIV / Mercosur")
+)
+
+kable(tech_data,
+      col.names = c("Región Vitivinícola", "Velocidad (botellas/h)", "Automatización",
+                    "Trazabilidad Digital", "Normas Exportación"),
+      caption = "Comparativa tecnológica de líneas de embotellado por región vitivinícola mundial")
+```
+
+## Tendencias Normativas en Etiquetado Internacional
+
+El etiquetado de vinos está experimentando una transformación profunda impulsada por tres vectores: la digitalización (etiquetas QR obligatorias en la UE desde diciembre 2023 para vinos comercializados en la región), la sustentabilidad (certificaciones de huella hídrica y carbono) y la trazabilidad sanitaria (declaración de alérgenos, sulfitos). Estos requisitos imponen desafíos a productores que exportan pero también generan diferenciación para quienes los adoptan proactivamente [@canizo2019; @guilabert2016].
+
+```{r tendencias-etiquetado, fig.cap='Adopción de estándares de etiquetado avanzado por región (escala 0-10). Elaboración propia.', fig.height=5, fig.width=8}
+
+estandares <- data.frame(
+  Region = rep(c("UE (FR/IT/ES)", "EE.UU.", "Australia", "Chile", "Mendoza (AR)"), times = 3),
+  Estandar = rep(c("Etiqueta Digital (QR/NFC)", "Info. Nutricional", "Huella de Carbono"),
+                 each = 5),
+  Puntaje = c(9.2, 7.5, 6.8, 5.0, 3.5,
+              8.5, 9.0, 7.0, 5.5, 4.0,
+              7.0, 6.5, 8.5, 4.5, 2.5)
+)
+
+ggplot(estandares, aes(x = Region, y = Puntaje, fill = Estandar)) +
+  geom_col(position = "dodge", width = 0.65) +
+  scale_fill_manual(values = c("#4a1942", "#9b4dca", "#c8a97e")) +
+  scale_y_continuous(limits = c(0, 11), breaks = seq(0, 10, 2)) +
+  theme_minimal(base_family = "sans") +
+  labs(
+    x = NULL, y = "Nivel de Adopción (0-10)",
+    title = "Adopción de Estándares de Etiquetado Avanzado",
+    fill = "Estándar"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 20, hjust = 1, size = 9),
+    plot.title = element_text(face = "bold", size = 13),
+    legend.position = "top"
+  )
+```
+
+---
+
+# Mendoza: Diagnóstico y Potencial Estratégico
+
+## Perfil Productivo de Mendoza
+
+Mendoza concentra aproximadamente el 70% de la producción vitivinícola argentina, con más de 1.200 bodegas registradas y una superficie cultivada superior a las 150.000 hectáreas [@garcia2010]. La región posee una identidad varietal consolidada —liderada por el Malbec como emblema global— y cuenta con denominaciones de origen controladas (Luján de Cuyo, Valle de Uco) que constituyen activos de marca de alto valor. La implementación de sistemas de gestión ambiental en empresas del sector, incluyendo prácticas de producción limpia y certificaciones ISO 14001, representa un vector adicional de diferenciación [@welte2009].
+
+Sin embargo, el subsector de fraccionamiento y embotellado presenta asimetrías estructurales:
+
+- **Alta concentración**: el 80% del fraccionamiento es realizado por el 15% de las bodegas (grandes grupos).
+- **Brecha tecnológica**: las bodegas medianas y pequeñas operan líneas de embotellado con velocidades inferiores a 6.000 botellas/hora.
+- **Dependencia del granel**: cerca del 39% de las exportaciones argentinas aún se realizan a granel, con pérdida de valor agregado.
+- **Etiquetado reactivo**: la adaptación a nuevas normativas internacionales (UE, China) es lenta y principalmente impulsada por demandas de importadores, no por iniciativa propia.
+
+## Análisis FODA del Subsector en Mendoza
+
+```{r foda-tabla, layout="l-body-outset"}
+
+foda <- data.frame(
+  Dimension = c(
+    "Fortalezas", "Fortalezas", "Fortalezas",
+    "Oportunidades", "Oportunidades", "Oportunidades",
+    "Debilidades", "Debilidades", "Debilidades",
+    "Amenazas", "Amenazas", "Amenazas"
+  ),
+  Descripcion = c(
+    "Identidad varietal consolidada (Malbec, Torrontés, Cabernet)",
+    "Denominaciones de origen reconocidas internacionalmente",
+    "Capital humano enológico de alto nivel (UNCuyo, ISCAMEN)",
+    "Creciente demanda global de vinos premium y sustentables",
+    "Digitalización del etiquetado como herramienta de diferenciación",
+    "Expansión a mercados asiáticos (China, Japón, Corea del Sur)",
+    "Líneas de embotellado fragmentadas y de baja velocidad",
+    "Escasa adopción de etiquetado digital y trazabilidad",
+    "Alta dependencia de exportación a granel",
+    "Competencia de Chile y Uruguay con mejor integración logística",
+    "Barreras arancelarias y requisitos normativos en la UE",
+    "Volatilidad cambiaria que encarece inversiones en tecnología"
+  )
+)
+
+kable(foda,
+      col.names = c("Dimensión", "Descripción"),
+      caption = "Análisis FODA del subsector de fraccionamiento y embotellado en Mendoza")
+```
+
+## Potencial de Valor Agregado: Fraccionamiento en Origen vs. Granel
+
+```{r valor-agregado, fig.cap='Diferencial de valor por litro según modalidad de comercialización (USD/litro, estimaciones 2023). Elaboración propia sobre datos COVIAR e INV.', fig.height=5, fig.width=8}
+
+valor <- data.frame(
+  Modalidad = c("Granel básico\n(< USD 0.50/L)", "Granel premium\n(USD 0.50-1.50/L)",
+                "Fraccionado básico\n(botella s/DOP)", "Fraccionado con DOP\n(Luján/Valle de Uco)",
+                "Fraccionado premium\n(etiqueta digital + cert.)"),
+  Valor_USD = c(0.35, 1.00, 2.80, 5.50, 9.20),
+  Categoria = c("Granel", "Granel", "Fraccionado", "Fraccionado", "Fraccionado")
+)
+
+ggplot(valor, aes(x = reorder(Modalidad, Valor_USD), y = Valor_USD, fill = Categoria)) +
+  geom_col(width = 0.65) +
+  geom_text(aes(label = paste0("USD ", Valor_USD)), vjust = -0.4, size = 3.5,
+            fontface = "bold") +
+  scale_fill_manual(values = c("#c8a97e", "#4a1942"), name = NULL) +
+  scale_y_continuous(limits = c(0, 11)) +
+  theme_minimal(base_family = "sans") +
+  labs(
+    x = NULL,
+    y = "Valor (USD / litro)",
+    title = "Diferencial de Valor según Modalidad de Comercialización",
+    subtitle = "Mendoza | Estimaciones 2023"
+  ) +
+  theme(
+    axis.text.x = element_text(size = 8.5),
+    plot.title = element_text(face = "bold", size = 13),
+    legend.position = "top"
+  )
+```
+
+El diferencial entre vino a granel básico (USD 0,35/L) y vino fraccionado premium con certificaciones de sustentabilidad y etiqueta digital (USD 9,20/L) alcanza un múltiplo de **26x**. Este dato ilustra con claridad el margen de captura de valor que existe mediante la inversión en infraestructura de fraccionamiento, diseño de etiqueta estratégico y certificaciones internacionales [@aguirre2023].
+
+---
+
+# Recomendaciones Estratégicas
+
+## Líneas de Acción para el Sector
+
+A partir del análisis comparativo y el diagnóstico mendocino, se proponen las siguientes líneas de acción priorizadas:
+
+**1. Centros de Fraccionamiento Compartidos (CFC)**
+La creación de consorcios entre bodegas medianas para la operación de líneas de embotellado de alta velocidad (>=18.000 BPH) bajo el modelo de *co-packing* permitiría distribuir la inversión en equipamiento y acceder a economías de escala hoy reservadas para grandes grupos.
+
+**2. Programa de Etiquetado Digital**
+Desarrollar un estándar regional de etiqueta QR integrada que incluya información de origen, viñedo, vinificación, certificaciones y huella ambiental, alineado con la normativa UE vigente desde 2023 y anticipando exigencias del mercado asiático [@guilabert2016].
+
+**3. Trazabilidad y Autenticación Geoquímica**
+La incorporación de análisis multielementales (como los descriptos por estudios quimiométricos con Random Forest aplicados a hollejos y jugos de uva mendocinos) permitiría respaldar con evidencia científica las denominaciones de origen, agregando valor diferencial a los vinos fraccionados con DOP [@canizo2019].
+
+**4. Articulación Público-Privada**
+Aprovechar el ecosistema institucional existente (INV, COVIAR, ISCAMEN, UNCuyo, ProMendoza) para diseñar programas de financiamiento, asistencia técnica y acceso a mercados específicamente orientados al subsector de fraccionamiento y etiquetado.
+
+---
+
+# Conclusiones
+
+El análisis comparativo demuestra que el fraccionamiento, el embotellado y el etiquetado no son meras operaciones logísticas: son etapas constitutivas del valor del vino como producto cultural y comercial. Las regiones líderes a nivel global han comprendido esto hace décadas y han construido sistemas integrados que capturan la mayor parte del valor en origen.
+
+Mendoza, con su reconocida identidad varietal, su infraestructura enológica y su capital humano, tiene los recursos fundamentales para dar el salto hacia una integración vertical más profunda. La brecha tecnológica en líneas de embotellado, la lenta adopción del etiquetado digital y la persistente dependencia del granel son obstáculos concretos pero no estructuralmente insalvables.
+
+La combinación de modelos colaborativos (CFC), inversión en trazabilidad digital, certificaciones internacionales y articulación institucional representa una hoja de ruta viable para transformar el potencial mendocino en posicionamiento competitivo real en los mercados globales del vino premium.
+
+---
+
+# Referencias
+
+<div id="refs"></div>
+
+---
+
+*Nota: Los datos de producción corresponden a estimaciones OIV 2019-2023. Los valores de precio por litro son estimaciones orientativas basadas en datos públicos del INV y COVIAR. Este artículo es de carácter analítico y no constituye asesoramiento comercial.*
